@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -36,29 +36,24 @@ const customTextInputProps = {
 setCustomText(customTextProps);
 setCustomTextInput(customTextInputProps);
 
-
-
 function DashboardStack() {
   return (
     <Stack.Navigator
       screenOptions={({ navigation }) => ({
         headerTitleAlign: "center",
-        headerLeft: props =>
-        (
-          <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => { navigation.toggleDrawer() }}>
+        headerLeft: props => (
+          <TouchableOpacity style={styles.menuButton} onPress={() => { navigation.toggleDrawer() }}>
             <Icon name="menu" size={30} color="#000" />
           </TouchableOpacity>
         ),
-        headerRight: props =>
-        (
-          <View style={{ marginRight: 5, flexDirection: "row", gap: 15 }}>
+        headerRight: props => (
+          <View style={styles.headerRightContainer}>
             <MailBoxIcon width={20} height={20} />
-            <TouchableOpacity style={{ position: "relative" }} onPress={() => { navigation.navigate('Notifications') }}>
+            <TouchableOpacity style={styles.notificationButton} onPress={() => { navigation.navigate('Notifications') }}>
               <BellIcon width={20} height={20} />
-              <View style={{ width: 10, height: 10, backgroundColor: "#FF9C01", position: "absolute", borderRadius: 5, top: 0, right: 0 }}></View>
+              <View style={styles.notificationDot}></View>
             </TouchableOpacity>
           </View>
-
         ),
       })}
     >
@@ -67,9 +62,8 @@ function DashboardStack() {
         name="Notifications"
         component={NotificationsList}
         options={({ navigation }) => ({
-          headerLeft: props =>
-          (
-            <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => { navigation.goBack() }}>
+          headerLeft: props => (
+            <TouchableOpacity style={styles.backButton} onPress={() => { navigation.goBack() }}>
               <Icon name="chevron-back" size={30} color="#000" />
             </TouchableOpacity>
           ),
@@ -80,90 +74,67 @@ function DashboardStack() {
   );
 }
 
-
-
-
-
 function CustomDrawerContent(props) {
   return (
-    <View style={{ flex: 1 }}>
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-
-          flex: 0.4,
-        }}>
+    <View style={styles.drawerContainer}>
+      <View style={styles.drawerHeader}>
         <Image
           source={User}
-          style={{ width: 100, height: 100, borderRadius: 50 }}></Image>
-        <Text style={{ paddingTop: 10, letterSpacing: 1, fontSize: 16, color: "black" }}>
+          style={styles.userImage}></Image>
+        <Text style={styles.helloText}>
           Hello !
         </Text>
-        <Text style={{ paddingTop: 5, fontSize: 18, color: "black", textTransform:"uppercase" }}>
-        Vishwanath
+        <Text style={styles.userNameText}>
+          Vishwanath
         </Text>
       </View>
 
-      <View
-        style={{
-          height: 1,
-          width: '100%',
-          backgroundColor: 'rgba(0,0,0,0.1)',
-        }}></View>
-      <ScrollView
-        style={{
-          flex: 1,
-        }}>
-        <View style={{ padding: 10, gap: 10 }}>
-          <View style={{ flexDirection: "row", gap: 10, backgroundColor: "#E2E7FF", padding: 10, borderRadius: 5 }}>
-            <DashboardIcon></DashboardIcon>
-            <Text style={{ color: "#2C67FF", fontWeight: "bold" }}>Dashboard</Text>
+      <View style={styles.divider}></View>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.drawerItemsContainer}>
+          <View style={styles.drawerItemActive}>
+            <DashboardIcon />
+            <Text style={styles.activeItemText}>Dashboard</Text>
           </View>
-          <View style={{ flexDirection: "row", gap: 10, padding: 10, borderRadius: 5 }}>
-            <CustomerQuestionIcon></CustomerQuestionIcon>
-            <Text style={{ color: "#A7B3C3", fontWeight: "bold" }}>Customer Question</Text>
+          <View style={styles.drawerItem}>
+            <CustomerQuestionIcon />
+            <Text style={styles.inactiveItemText}>Customer Question</Text>
           </View>
-          <View style={{ flexDirection: "row", gap: 10, padding: 10, borderRadius: 5 }}>
-            <BusinessManIcon></BusinessManIcon>
-            <Text style={{ color: "#A7B3C3", fontWeight: "bold" }}>Business</Text>
+          <View style={styles.drawerItem}>
+            <BusinessManIcon />
+            <Text style={styles.inactiveItemText}>Business</Text>
           </View>
-          <View style={{ flexDirection: "row", gap: 10, padding: 10, borderRadius: 5 }}>
-            <ProductsIcon></ProductsIcon>
-            <Text style={{ color: "#A7B3C3", fontWeight: "bold" }}>Products</Text>
+          <View style={styles.drawerItem}>
+            <ProductsIcon />
+            <Text style={styles.inactiveItemText}>Products</Text>
           </View>
-          <View style={{ flexDirection: "row", gap: 10, padding: 10, borderRadius: 5 }}>
-            <TradesIcon></TradesIcon>
-            <Text style={{ color: "#A7B3C3", fontWeight: "bold" }}>Trades</Text>
+          <View style={styles.drawerItem}>
+            <TradesIcon />
+            <Text style={styles.inactiveItemText}>Trades</Text>
           </View>
-          <View style={{ flexDirection: "row", gap: 10, padding: 10, borderRadius: 5 }}>
-            <SalesIcon></SalesIcon>
-            <Text style={{ color: "#A7B3C3", fontWeight: "bold" }}>Sales</Text>
+          <View style={styles.drawerItem}>
+            <SalesIcon />
+            <Text style={styles.inactiveItemText}>Sales</Text>
           </View>
-          <View style={{ flexDirection: "row", gap: 10, padding: 10, borderRadius: 5 }}>
-            <CheckListIcon></CheckListIcon>
-            <Text style={{ color: "#A7B3C3", fontWeight: "bold" }}>CheckList</Text>
+          <View style={styles.drawerItem}>
+            <CheckListIcon />
+            <Text style={styles.inactiveItemText}>CheckList</Text>
           </View>
-          <View style={{ flexDirection: "row", gap: 10, padding: 10, borderRadius: 5 }}>
-            <ShipIcon></ShipIcon>
-            <Text style={{ color: "#A7B3C3", fontWeight: "bold" }}>Ship</Text>
+          <View style={styles.drawerItem}>
+            <ShipIcon />
+            <Text style={styles.inactiveItemText}>Ship</Text>
           </View>
         </View>
-
       </ScrollView>
-
     </View>
   );
 }
 
-
 function MainTabs() {
   return (
     <Tab.Navigator screenOptions={{
-      header: () => null, tabBarStyle: {
-        height:55,
-        paddingBottom: 5
-      }
+      header: () => null, 
+      tabBarStyle: styles.tabBarStyle
     }}>
       <Tab.Screen name="Dashboard_Stack" component={DashboardStack} options={{
         tabBarIcon: ({ color, size }) => (
@@ -186,18 +157,8 @@ function MainTabs() {
   );
 }
 
-
 export default function App() {
   return (
-    // <NavigationContainer>
-    //   <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />} initialRouteName="Home">
-    //     <Drawer.Screen options={{
-    //       header: () => null,
-
-    //     }} name="Dashboard_Drawer" component={DashboardStack} />
-    //   </Drawer.Navigator>
-    // </NavigationContainer>
-
     <NavigationContainer>
       <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />} initialRouteName="Dashboard_Drawer">
         <Drawer.Screen options={{ header: () => null }} name="Dashboard_Drawer" component={MainTabs} />
@@ -205,3 +166,92 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+
+const styles = {
+  drawerContainer: {
+    flex: 1
+  },
+  drawerHeader: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 0.4
+  },
+  userImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50
+  },
+  helloText: {
+    paddingTop: 10,
+    letterSpacing: 1,
+    fontSize: 16,
+    color: "black"
+  },
+  userNameText: {
+    paddingTop: 5,
+    fontSize: 18,
+    color: "black",
+    textTransform: "uppercase"
+  },
+  divider: {
+    height: 1,
+    width: '100%',
+    backgroundColor: 'rgba(0,0,0,0.1)'
+  },
+  scrollView: {
+    flex: 1
+  },
+  drawerItemsContainer: {
+    padding: 10,
+    gap: 10
+  },
+  drawerItemActive: {
+    flexDirection: "row",
+    gap: 10,
+    backgroundColor: "#E2E7FF",
+    padding: 10,
+    borderRadius: 5
+  },
+  activeItemText: {
+    color: "#2C67FF",
+    fontWeight: "bold"
+  },
+  drawerItem: {
+    flexDirection: "row",
+    gap: 10,
+    padding: 10,
+    borderRadius: 5
+  },
+  inactiveItemText: {
+    color: "#A7B3C3",
+    fontWeight: "bold"
+  },
+  menuButton: {
+    marginLeft: 5
+  },
+  headerRightContainer: {
+    marginRight: 5,
+    flexDirection: "row",
+    gap: 15
+  },
+  notificationButton: {
+    position: "relative"
+  },
+  notificationDot: {
+    width: 10,
+    height: 10,
+    backgroundColor: "#FF9C01",
+    position: "absolute",
+    borderRadius: 5,
+    top: 0,
+    right: 0
+  },
+  backButton: {
+    marginLeft: 5
+  },
+  tabBarStyle: {
+    height: 55,
+    paddingBottom: 5
+  }
+};
